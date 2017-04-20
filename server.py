@@ -1,15 +1,12 @@
 import os
 
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
-
-for key in app.config["REQUIRED_ENV_CONFIG_FIELDS"]:
-    if key not in os.environ:
-        raise EnvironmentError("Required env variable {} missing".format(key))
-
 app.config.from_mapping(os.environ)
+CORS(app)
 
 
 @app.route('/api/signup', methods=['POST'])

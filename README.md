@@ -1,2 +1,35 @@
 # signature-authentication-server
-Authentication server using ethereum signatures, captcha and issuing JWT
+Authentication server using Ethereum signatures, captcha and issuing JWT
+
+## Getting started
+
+Get the source code:
+```
+git clone https://github.com/Neufund/signature-authentication-server.git
+cd signature-authentication-server
+
+Build the container:
+```
+docker build . -t signature-authentication-server
+```
+
+Generate a keypair:
+```
+openssl ecparam -genkey -name secp521r1 -noout -out ec512.prv.pem
+openssl ec -in ec512.prv.pem -pubout > ec512.pub.pem
+```
+
+Start the container:
+```
+docker run -ti -v (pwd)/ec512.prv.pem:/srv/ec512.prv.pem:ro -p 5000:5000 signature-authentication-server
+```
+
+## Using
+
+```
+curl -X POST -H 'Content-Type: application/json' http://localhost:5000/api/signup -d '{"signature":"asd"}'
+```
+
+```
+curl -X POST -H 'Content-Type: application/json' http://localhost:5000/api/signup -d '{"signature":"asd"}'
+```

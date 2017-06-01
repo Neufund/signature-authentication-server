@@ -22,6 +22,6 @@ def _get_claims(audience, ttl):
 def sign_login_credentials(data):
     from server import app
     payload = {**data,
-               **_get_claims(app.config['MS2_AUDIENCE'], app.config["LOGIN_TOKEN_LIFE_TIME"])}
+               **_get_claims(app.config['AUDIENCE'], app.config["LOGIN_TOKEN_LIFE_TIME"])}
     return jwt.encode(payload, app.config['PRIVATE_ECDSA_KEY'],
                       algorithm=app.config['LOGIN_ALGORITHM'])

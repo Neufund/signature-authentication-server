@@ -1,7 +1,7 @@
 import os
-
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+import auth
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -17,8 +17,10 @@ def signup():
 
 @app.route('/api/login', methods=['POST'])
 def login():
+    address = request.get_json()["address"]
     data = request.get_json()["signature"]
-    return data
+    return auth.sign_login_credentials({"sub": address})
+
 
 @app.errorhandler(400)
 def bad_request(ex):

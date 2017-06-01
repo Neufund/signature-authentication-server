@@ -34,5 +34,5 @@ curl -X POST -H 'Content-Type: application/json' http://localhost:5000/api/signu
 ```
 
 ```
-curl -X POST -H 'Content-Type: application/json' http://localhost:5000/api/signup -d '{"signature":"asd"}'
+curl -X POST -H 'Content-Type: application/json' http://localhost:5000/api/login -d '{"signature":"asd", "address":"foo"}'
 ```

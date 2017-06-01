@@ -1,6 +1,5 @@
-# Logs
 logs
 *.log
-
-# Keys
 *.pem
+.coverage
+env

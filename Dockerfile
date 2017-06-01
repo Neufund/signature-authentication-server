@@ -20,12 +20,14 @@ ENV PYTHONPATH $PYTHONPATH:/urs/src/app
 
 ADD requirements.txt .
 RUN \
-   apk add --no-cache uwsgi-python3 &&\
-   python3 -m ensurepip &&\
-   rm -r /usr/lib/python*/ensurepip &&\
-   pip3 install --upgrade pip setuptools &&\
-   pip3 install -r requirements.txt &&\
-   rm -r /root/.cache
+    apk add --no-cache --virtual build-deps build-base python3-dev libffi-dev openssl-dev &&\
+    apk add --no-cache uwsgi-python3 openssl &&\
+    python3 -m ensurepip &&\
+    rm -r /usr/lib/python*/ensurepip &&\
+    pip3 install --upgrade pip setuptools &&\
+    pip3 install -r requirements.txt &&\
+    apk del --purge build-deps &&\
+    rm -r /root/.cache
 
 ADD uwsgi.ini uwsgi.ini
 ADD *.py /usr/src/app/

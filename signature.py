@@ -39,14 +39,3 @@ def verify(address, message, signature):
         return address == pub_to_address(pubkey)
     except:
         return False
-
-test = dict(
-    private= bytes.fromhex('4af1bceebf7f3634ec3cff8a2c38e51178d5d4ce585c52d6043e5e2cc3418bb0'),
-    public= bytes.fromhex('9e9e45b2ec5f070b4e26f57c7fedf647afa7a03e894789816fbd12fedc5acd79d0dfeea925688e177caccb8f5e09f0c289bbcfc7adb98d76f5f8c5259478903a'),
-    address= '0x29c76e6ad8f28bb1004902578fb108c507be341b',
-    message= 'Hello, world!',
-    hash= bytes.fromhex('b453bd4e271eed985cbab8231da609c4ce0a9cf1f763b6c1594e76315510e0f1'),
-    signature = bytes.fromhex('90a938f7457df6e8f741264c32697fc52f9a8f867c52dd70713d9d2d472f2e415d9c94148991bbe1f4a1818d1dff09165782749c877f5cf1eff4ef126e55714d1c')
-)
-
-assert verify(test['address'], test['message'], test['signature'])

@@ -1,26 +1,50 @@
 import os
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
-import auth
+from auth import *
+from challengeResponse import *
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 app.config.from_mapping(os.environ)
 CORS(app)
 
+def validate_address(address):
+    assert len(address) == 42
+    assert address[2:] == bytes.fromhex(address[2:]).hex()
+    return address
 
-@app.route('/api/signup', methods=['POST'])
-def signup():
-    data = request.get_json()["signature"]
-    return data
+def validate_bytes(hex):
+    return bytes.fromhex(hex)
 
+def validate_jwt():
+    try:
+        # Authorization: Bearer <token>
+        token = request.headers.get("Authorization").split(' ')[1]
+        return verify_token(token)
+    except:
+        abort(401)
+
+@app.route('/api/challenge', methods=['POST'])
+def challenge():
+    address = validate_address(request.json["address"])
+    challenge = generate_challenge(address)
+    return  jsonify({"challenge": challenge.hex()})
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    address = request.get_json()["address"]
-    data = request.get_json()["signature"]
-    return auth.sign_login_credentials({"sub": address})
+    address = validate_address(request.json["address"])
+    challenge = validate_bytes(request.json["challenge"])
+    response = validate_bytes(request.json["response"])
+    if not verify_response(address, challenge, response):
+        abort(403)
+    return jsonify({"token": create_token(address)})
 
+@app.route('/api/renew', methods=['POST'])
+def renew():
+    jwt = validate_jwt()
+    address = validate_address(jwt['sub'])
+    return jsonify({"token": create_token(address)})
 
 @app.errorhandler(400)
 @app.errorhandler(401)

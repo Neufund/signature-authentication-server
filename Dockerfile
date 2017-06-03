@@ -31,6 +31,9 @@ RUN \
 
 ADD uwsgi.ini uwsgi.ini
 ADD *.py /usr/src/app/
+RUN \
+    python3 ./test.py &&\
+    rm ./test.py
 
 ENV FLASK_DEBUG 0
 ENV FLASK_HOST 0.0.0.0

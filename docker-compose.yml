@@ -1,8 +1,0 @@
-version: '2'
-services:
-  signature-authenticator-server:
-    build: .
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./ec512.pub.pem:/usr/src/app/ec512.pub.pem

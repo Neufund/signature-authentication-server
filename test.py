@@ -16,6 +16,10 @@ class VerifyTest(unittest.TestCase):
         hash = message_hash(self.message)
         self.assertEqual(self.hash, hash)
 
+    def test_hash_unicode(self):
+        hash = message_hash(self.message.decode('utf8'))
+        self.assertEqual(self.hash, hash)
+
     def test_verify(self):
         self.assertEqual(verify(self.address, self.message, self.signature), True)
 

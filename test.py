@@ -1,5 +1,6 @@
 import unittest
 from signature import *
+from challengeResponse import *
 
 def bit_flip(bytes, pos):
     return (int.from_bytes(bytes, 'big') ^ 2**pos).to_bytes(len(bytes), 'big')
@@ -39,6 +40,24 @@ class VerifyTest(unittest.TestCase):
         for i in range(len(self.signature) * 8):
             signature = bit_flip(self.signature, i)
             self.assertEqual(verify(self.address, self.message, signature), False)
+
+class ChallengeResponseTest(unittest.TestCase):
+
+    address = '0x29c76e6ad8f28bb1004902578fb108c507be341b'
+
+    def test_generate_verify(self):
+        challenge = generate_challenge(self.address)
+        verify_challenge(self.address, challenge);
+
+    def test_manipulated_challenge(self):
+        challenge = generate_challenge(self.address)
+        for i in range(len(challenge) * 8):
+            manip = bit_flip(challenge, i)
+            try:
+                verify_challenge(self.address, manip);
+                assert False
+            except:
+                continue
 
 if __name__ == '__main__':
     unittest.main()

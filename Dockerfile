@@ -20,11 +20,14 @@ ENV PYTHONPATH $PYTHONPATH:/urs/src/app
 
 ADD requirements.txt .
 RUN \
-    apk add --no-cache --virtual build-deps build-base python3-dev libffi-dev openssl-dev &&\
+    apk add --no-cache --virtual build-deps build-base automake autoconf libtool python3-dev libffi-dev openssl-dev &&\
     apk add --no-cache uwsgi-python3 openssl &&\
     python3 -m ensurepip &&\
     rm -r /usr/lib/python*/ensurepip &&\
     pip3 install --upgrade pip setuptools &&\
+    pip3 install cffi>=1.3.0 &&\
+    pip3 install setuptools_scm &&\
+    pip3 install pytest-runner==2.6.2 &&\
     pip3 install -r requirements.txt &&\
     apk del --purge build-deps &&\
     rm -r /root/.cache

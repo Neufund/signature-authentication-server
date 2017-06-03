@@ -19,18 +19,17 @@ def strip_mac(msg):
     assert verify_mac(msg[:-48], msg[-48:])
     return msg[:-48]
 
-def generate_challenge(address):
+def generate_challenge(address, ttl=60):
     address = bytes.fromhex(address[2:])
-    timestamp = int(datetime.utcnow().timestamp()).to_bytes(4, 'big')
+    expiry = datetime.utcnow() + timedelta(seconds=ttl)
+    timestamp = int(expiry.timestamp()).to_bytes(4, 'big')
     return add_mac(address + timestamp)
 
 def verify_challenge(address, challenge):
     msg = strip_mac(challenge)
-    timestamp = datetime.fromtimestamp(int.from_bytes(msg[20:24], 'big'))
+    expiry = datetime.fromtimestamp(int.from_bytes(msg[20:24], 'big'))
     assert msg[:20] == bytes.fromhex(address[2:])
-    assert timestamp <= datetime.utcnow()
-    # TODO Make configurable
-    assert timestamp > datetime.utcnow() - timedelta(seconds=60)
+    assert expiry > datetime.utcnow()
 
 def verify_response(address, challenge, response):
     try:

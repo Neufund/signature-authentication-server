@@ -1,6 +1,6 @@
 # signature-authentication-server
 
-[![Build Status](https://travis-ci.org/Neufund/signature-authentication-server.svg)](https://travis-ci.org/Neufund/signature-authentication-server)  [![codecov](https://codecov.io/gh/Neufund/signature-authentication-server/branch/master/graph/badge.svg)](https://codecov.io/gh/Neufund/signature-authentication-server)
+[![Build Status](https://travis-ci.org/Neufund/signature-authentication-server.svg)](https://travis-ci.org/Neufund/signature-authentication-server)  [![codecov](https://codecov.io/gh/Neufund/signature-authentication-server/branch/master/graph/badge.svg)](https://codecov.io/gh/Neufund/signature-authentication-server) [![](https://images.microbadger.com/badges/image/neufund/signature-authentication-server.svg)](https://microbadger.com/images/neufund/signature-authentication-server)  [![](https://images.microbadger.com/badges/version/neufund/signature-authentication-server.svg)](https://microbadger.com/images/neufund/signature-authentication-server)
 
 Authentication server using Ethereum signatures, captcha and issuing JWT
 

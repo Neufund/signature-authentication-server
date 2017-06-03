@@ -15,7 +15,7 @@ def validate_address(address):
     return address
 
 def validate_bytes(hex):
-    return bytes.fromhex(hex)
+    return bytes.fromhex(hex.replace('0x',''))
 
 def validate_jwt():
     try:

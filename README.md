@@ -10,6 +10,7 @@ Get the source code:
 ```
 git clone https://github.com/Neufund/signature-authentication-server.git
 cd signature-authentication-server
+```
 
 Build the container:
 ```

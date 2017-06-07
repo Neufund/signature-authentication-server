@@ -11,7 +11,9 @@ CORS(app)
 
 def validate_address(address):
     assert len(address) == 42
-    assert address[2:] == bytes.fromhex(address[2:]).hex()
+    assert address[:2] === '0x'
+    assert address[2:].lower() == bytes.fromhex(address[2:]).hex()
+    # TODO: Verify checksum
     return address
 
 def validate_bytes(hex):
@@ -57,6 +59,7 @@ def renew():
 @app.errorhandler(504)
 @app.errorhandler(505)
 def json_error_handler(ex):
+    # TODO This does not always get HTMLException with code.
     return jsonify({"code": ex.code, "message": ex.description}), ex.code
 
 if __name__ == '__main__':

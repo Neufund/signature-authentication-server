@@ -12,3 +12,4 @@ six==1.10.0
 Werkzeug==0.12.1
 pysha3==1.0.2
 secp256k1==0.13.2
+ethereum-utils==0.2.0

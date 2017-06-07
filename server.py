@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
 from auth import *
 from challengeResponse import *
+from eth_utils import to_checksum_address
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -13,7 +14,7 @@ def validate_address(address):
     assert len(address) == 42
     assert address[:2] == '0x'
     assert address[2:].lower() == bytes.fromhex(address[2:]).hex()
-    # TODO: Verify checksum
+    assert address == to_checksum_address(address)
     return address
 
 def validate_bytes(hex):

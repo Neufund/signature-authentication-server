@@ -11,7 +11,7 @@ CORS(app)
 
 def validate_address(address):
     assert len(address) == 42
-    assert address[:2] === '0x'
+    assert address[:2] == '0x'
     assert address[2:].lower() == bytes.fromhex(address[2:]).hex()
     # TODO: Verify checksum
     return address

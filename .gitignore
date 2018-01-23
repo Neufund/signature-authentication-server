@@ -4,3 +4,4 @@ logs
 .coverage
 env
 __pycache__
+.direnv
